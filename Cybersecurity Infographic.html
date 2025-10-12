@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cybersecurity Merit Badge: An Interactive Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        let app;
+        let db;
+        let auth;
+        let userId = 'loading';
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const initFirebase = async () => {
+            if (Object.keys(firebaseConfig).length === 0) {
+                console.error("Firebase config not found. Skipping initialization.");
+                userId = crypto.randomUUID();
+                return;
+            }
+            try {
+                setLogLevel('Debug');
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                    } else {
+                        if (initialAuthToken) {
+                            try {
+                                await signInWithCustomToken(auth, initialAuthToken);
+                            } catch (error) {
+                                console.error("Error signing in with custom token, signing anonymously:", error);
+                                await signInAnonymously(auth);
+                                userId = auth.currentUser?.uid || crypto.randomUUID();
+                            }
+                        } else {
+                            await signInAnonymously(auth);
+                            userId = auth.currentUser?.uid || crypto.randomUUID();
+                        }
+                    }
+                    console.log("Firebase initialized. User ID:", userId);
+                });
+
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                userId = crypto.randomUUID();
+            }
+        };
+
+        initFirebase();
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F2F2F2;
+            color: #0D0D0D;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .stat-card {
+            background-color: #0B2D48;
+            color: #F2F2F2;
+        }
+        .card {
+            background-color: white;
+        }
+        h1, h2 {
+            color: #0B2D48;
+        }
+        .flowchart-step {
+            border-color: #25A4D3;
+            background-color: white;
+            color: #0B2D48;
+        }
+        .flowchart-arrow {
+            color: #25A4D3;
+        }
+        .llm-output {
+            border-left: 4px solid #0B2D48;
+        }
+        .llm-loading {
+             border-top: 4px solid #25A4D3;
+             border-radius: 50%;
+             width: 24px;
+             height: 24px;
+             animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+
+    <header class="bg-white shadow-md p-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-black mb-2">Cybersecurity Merit Badge</h1>
+        <p class="text-lg text-gray-600">Your Guide to Protecting the Digital World</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="intro" class="text-center mb-12">
+            <div class="stat-card rounded-lg shadow-xl p-8 max-w-2xl mx-auto">
+                <p class="text-2xl font-light">By 2025, the cost of cybercrime is projected to hit</p>
+                <p class="text-7xl font-black my-4 text-cyan-400">$10.5 Trillion</p>
+                <p class="text-lg font-light">annually. Being prepared is not just a motto—it's a necessity.</p>
+            </div>
+            <div class="mt-8 max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold mb-4">What is Cybersecurity?</h2>
+                <p class="text-xl text-gray-700">It’s the practice of being a digital Scout: defending computers, networks, and data from malicious attacks. This infographic will guide you through the key themes of the merit badge, from fundamentals to future careers.</p>
+            </div>
+        </section>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <div class="lg:col-span-2 card rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Your Digital Self: Safety & Ethics</h2>
+                <p class="text-center text-gray-600 mb-8">Your first line of defense is you. Understanding your online presence and applying Scout values are the foundation of good cybersecurity.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Your Digital Footprint (Req. 1)</h3>
+                        <p class="text-gray-700 mb-4">Every time you go online, you leave a trail. This "digital footprint" is composed of your activity across various platforms. Managing it is key to protecting your privacy.</p>
+                        <div class="chart-container">
+                            <canvas id="footprintChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Ethics in Cyberspace (Req. 2)</h3>
+                        <p class="text-gray-700 mb-4">The Scout Law is your compass online. Being Trustworthy, Loyal, and Kind applies just as much to your digital actions as your physical ones.</p>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                                <h4 class="font-bold">A Scout is Trustworthy</h4>
+                                <p class="text-sm">Don't share misinformation or use others' accounts without permission.</p>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                                <h4 class="font-bold">A Scout is Kind</h4>
+                                <p class="text-sm">Stand up to cyberbullying and create a positive online environment.</p>
+                            </div>
+                            <div class="p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                                <h4 class="font-bold">A Scout is Obedient</h4>
+                                <p class="text-sm">Respect the terms of service for websites and apps you use.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card rounded-lg shadow-md p-6">
+                 <h2 class="text-2xl font-bold text-center mb-2">The C.I.A. Triad (Req. 3)</h2>
+                 <p class="text-center text-gray-600 mb-6">These three principles are the bedrock of all cybersecurity. Every defense is built to protect at least one of them.</p>
+                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                     <div class="p-4 rounded-lg bg-gray-50">
+                        <div class="text-4xl mb-2">C</div>
+                        <h3 class="font-bold">Confidentiality</h3>
+                        <p class="text-sm text-gray-600">Keeping secrets secret. Preventing unauthorized access to information.</p>
+                     </div>
+                     <div class="p-4 rounded-lg bg-gray-50">
+                        <div class="text-4xl mb-2">I</div>
+                        <h3 class="font-bold">Integrity</h3>
+                        <p class="text-sm text-gray-600">Ensuring data is accurate and trustworthy, not tampered with.</p>
+                     </div>
+                     <div class="p-4 rounded-lg bg-gray-50">
+                        <div class="text-4xl mb-2">A</div>
+                        <h3 class="font-bold">Availability</h3>
+                        <p class="text-sm text-gray-600">Making sure data and systems are accessible when needed.</p>
+                     </div>
+                 </div>
+            </div>
+
+            <div class="card rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-center mb-2">Common Cyber Threats (Req. 4)</h2>
+                <p class="text-center text-gray-600 mb-6">Malware is malicious software designed to harm your systems. Understanding the different types helps you recognize the danger.</p>
+                <div class="chart-container h-80 max-h-80">
+                    <canvas id="malwareChart"></canvas>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <h3 class="text-xl font-bold mb-2 text-darkBlue">✨ Threat Deep Dive (Gemini AI)</h3>
+                    <p class="text-sm text-gray-600 mb-3">Want to learn about a specific threat? Enter a name (e.g., *DDoS Attack*) and get an expert explanation.</p>
+                    <input type="text" id="threatInput" placeholder="Enter a cyber threat name..." class="p-2 border rounded-lg w-full mb-3 focus:ring-brightBlue focus:border-brightBlue">
+                    <button id="explainThreatBtn" class="bg-brightBlue text-white w-full p-2 rounded-lg font-bold hover:bg-[#1e8ec0] transition duration-150">
+                        Analyze Threat ✨
+                    </button>
+                    <div id="threatLoading" class="hidden my-4 flex justify-center items-center">
+                         <div class="llm-loading"></div>
+                    </div>
+                    <div id="threatOutput" class="llm-output mt-4 p-3 bg-gray-50 text-gray-700 rounded-r-lg hidden"></div>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-2 card rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-center mb-2">Anatomy of a Phishing Attack</h2>
+                <p class="text-center text-gray-600 mb-8">Phishing is a common social engineering tactic where attackers trick you into giving up personal information. Here’s how it works.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flowchart-step text-center p-4 rounded-lg border-2 w-48">
+                        <h3 class="font-bold">1. Deceptive Email</h3>
+                        <p class="text-sm">An urgent-looking email arrives from a source you think you trust.</p>
+                    </div>
+                    <div class="flowchart-arrow text-4xl font-bold transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flowchart-step text-center p-4 rounded-lg border-2 w-48">
+                        <h3 class="font-bold">2. Malicious Link</h3>
+                        <p class="text-sm">The email prompts you to click a link to resolve a "problem."</p>
+                    </div>
+                    <div class="flowchart-arrow text-4xl font-bold transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flowchart-step text-center p-4 rounded-lg border-2 w-48">
+                        <h3 class="font-bold">3. Fake Website</h3>
+                        <p class="text-sm">The link takes you to a fake login page that looks legitimate.</p>
+                    </div>
+                    <div class="flowchart-arrow text-4xl font-bold transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flowchart-step text-center p-4 rounded-lg border-2 w-48 bg-red-100 border-red-500">
+                        <h3 class="font-bold text-red-700">4. Information Stolen</h3>
+                        <p class="text-sm">You enter your credentials, and the attacker captures them.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-center mb-2">Your Defensive Layers (Req. 5)</h2>
+                <p class="text-center text-gray-600 mb-6">A good defense isn't a single tool, but layers of protection working together. This is known as "defense in depth."</p>
+                <div class="chart-container">
+                    <canvas id="defenseChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-center mb-2">Top Security Practices (Req. 5)</h2>
+                 <p class="text-center text-gray-600 mb-6">These simple but powerful actions form the core of personal cybersecurity. Prioritizing them can dramatically reduce your risk.</p>
+                <div class="chart-container h-80 max-h-80">
+                    <canvas id="practicesChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-2 card rounded-lg shadow-md p-6">
+                 <h2 class="text-3xl font-bold text-center mb-4">The Expanding Cyber World</h2>
+                <p class="text-center text-gray-600 mb-8">Cybersecurity extends beyond your computer to everyday objects and future careers.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">The Internet of Things (IoT) (Req. 7)</h3>
+                        <p class="text-gray-700 mb-4">More devices connect to the internet every day, from smart watches to home thermostats. Each is a potential entry point for attackers if not properly secured.</p>
+                        <div class="chart-container">
+                             <canvas id="iotChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Careers in Cybersecurity (Req. 9)</h3>
+                        <p class="text-gray-700 mb-4">This field is growing rapidly, with many exciting career paths for those with the right skills and a desire to protect others.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-800">
+                            <li><strong>Security Analyst:</strong> The digital detective, monitoring networks for suspicious activity.</li>
+                            <li><strong>Ethical Hacker:</strong> Paid to legally break into systems to find weaknesses before criminals do.</li>
+                            <li><strong>Digital Forensics Expert:</strong> Recovers and investigates material found in digital devices.</li>
+                            <li><strong>Security Architect:</strong> Designs and builds secure computer systems from the ground up.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <h3 class="text-xl font-bold mb-2 text-darkBlue">✨ IoT Security Plan Generator (Gemini AI)</h3>
+                    <p class="text-sm text-gray-600 mb-3">Enter the name of any smart device (e.g., *Smart Camera*) to get a custom, 4-step security checklist.</p>
+                    <input type="text" id="iotInput" placeholder="Enter an IoT device (e.g., Smart Speaker)..." class="p-2 border rounded-lg w-full mb-3 focus:ring-brightBlue focus:border-brightBlue">
+                    <button id="generateIotPlanBtn" class="bg-darkBlue text-white w-full p-2 rounded-lg font-bold hover:bg-[#082236] transition duration-150">
+                        Generate Security Plan ✨
+                    </button>
+                     <div id="iotLoading" class="hidden my-4 flex justify-center items-center">
+                         <div class="llm-loading"></div>
+                    </div>
+                    <div id="iotOutput" class="llm-output mt-4 p-3 bg-gray-50 text-gray-700 rounded-r-lg hidden"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+    <footer class="bg-white mt-12 p-8 text-center border-t">
+         <h2 class="text-3xl font-bold mb-4">Your Mission is Clear</h2>
+         <p class="max-w-3xl mx-auto text-lg text-gray-700">You've seen the landscape, the threats, and the defenses. Now it's time to act. Use this knowledge to complete the hands-on requirements, discuss what you've learned with your counselor, and earn your Cybersecurity Merit Badge. Be prepared, online and off.</p>
+    </footer>
+
+    <script>
+        const chartColors = {
+            darkBlue: '#0B2D48',
+            brightBlue: '#25A4D3',
+            lightGray: '#F2F2F2',
+            mediumGray: '#D9D9D9',
+            nearBlack: '#0D0D0D'
+        };
+
+        const GEMINI_MODEL = 'gemini-2.5-flash-preview-05-20';
+        const apiKey = "";
+        const LLM_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+
+        const processLabels = (labels) => {
+            const charLimit = 16;
+            return labels.map(label => {
+                if (label.length <= charLimit) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + ' ' + word).trim().length > charLimit) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                }
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
+            });
+        };
+
+        const tooltipTitleCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const callGeminiAPI = async (payload, maxRetries = 5) => {
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    const response = await fetch(LLM_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429 && attempt < maxRetries - 1) {
+                        const delay = Math.pow(2, attempt) * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    if (!text) {
+                        throw new Error("Received empty or invalid response from API.");
+                    }
+
+                    return text;
+
+                } catch (error) {
+                    if (attempt === maxRetries - 1) {
+                        console.error("Gemini API call failed after multiple retries:", error);
+                        throw new Error("Failed to connect to the AI service. Please try again later.");
+                    }
+                }
+            }
+        };
+        
+        const explainThreat = async () => {
+            const input = document.getElementById('threatInput').value.trim();
+            const outputDiv = document.getElementById('threatOutput');
+            const loadingDiv = document.getElementById('threatLoading');
+            
+            if (!input) {
+                outputDiv.textContent = "Please enter a specific cyber threat (e.g., Ransomware).";
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+
+            outputDiv.classList.add('hidden');
+            loadingDiv.classList.remove('hidden');
+
+            const systemPrompt = "You are a friendly, expert cybersecurity instructor explaining threats to a Boy Scout. Keep the explanation concise, clear, and focused on practical impact and real-world examples. Output the explanation in two short paragraphs.";
+            const userQuery = `Explain the cyber threat: ${input}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const text = await callGeminiAPI(payload);
+                outputDiv.innerHTML = `<strong>${input} Threat Analysis:</strong><br>${text.replace(/\n/g, '<br>')}`;
+                outputDiv.classList.remove('hidden');
+            } catch (error) {
+                outputDiv.textContent = error.message;
+                outputDiv.classList.remove('hidden');
+            } finally {
+                loadingDiv.classList.add('hidden');
+            }
+        };
+
+        const generateIotPlan = async () => {
+            const input = document.getElementById('iotInput').value.trim();
+            const outputDiv = document.getElementById('iotOutput');
+            const loadingDiv = document.getElementById('iotLoading');
+            
+            if (!input) {
+                outputDiv.textContent = "Please enter an IoT device name (e.g., Smart Doorbell).";
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+
+            outputDiv.classList.add('hidden');
+            loadingDiv.classList.remove('hidden');
+
+            const systemPrompt = "You are a helpful cybersecurity assistant. Generate a four-step security plan for the given IoT device. Each step should be a clear, practical instruction. Format the output as a numbered list.";
+            const userQuery = `Generate a security plan for a ${input}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const text = await callGeminiAPI(payload);
+                outputDiv.innerHTML = `<strong>Security Plan for ${input}:</strong><br>${text.replace(/\n/g, '<br>')}`;
+                outputDiv.classList.remove('hidden');
+            } catch (error) {
+                outputDiv.textContent = error.message;
+                outputDiv.classList.remove('hidden');
+            } finally {
+                loadingDiv.classList.add('hidden');
+            }
+        };
+
+        document.getElementById('explainThreatBtn').addEventListener('click', explainThreat);
+        document.getElementById('generateIotPlanBtn').addEventListener('click', generateIotPlan);
+
+        const ctxFootprint = document.getElementById('footprintChart');
+        new Chart(ctxFootprint, {
+            type: 'doughnut',
+            data: {
+                labels: ['Social Media', 'Online Gaming', 'School Accounts', 'Mobile Apps'],
+                datasets: [{
+                    label: 'Digital Footprint Composition',
+                    data: [40, 25, 20, 15],
+                    backgroundColor: [chartColors.brightBlue, chartColors.darkBlue, '#5bc0de', '#6FD5F0'],
+                    borderColor: chartColors.lightGray,
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        });
+        
+        const ctxMalware = document.getElementById('malwareChart');
+        new Chart(ctxMalware, {
+            type: 'bar',
+            data: {
+                labels: ['Ransomware', 'Spyware', 'Viruses', 'Adware', 'Trojans'],
+                datasets: [{
+                    label: 'Relative Impact Score',
+                    data: [90, 75, 60, 45, 85],
+                    backgroundColor: chartColors.brightBlue,
+                    borderColor: chartColors.darkBlue,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                },
+                 plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        });
+
+        const ctxDefense = document.getElementById('defenseChart');
+        new Chart(ctxDefense, {
+            type: 'radar',
+            data: {
+                labels: ['Firewall', 'Antivirus', 'Strong Passwords', 'Software Updates', 'MFA', 'VPN'],
+                datasets: [{
+                    label: 'Effectiveness',
+                    data: [8, 7, 9, 8, 10, 7],
+                    fill: true,
+                    backgroundColor: 'rgba(37, 164, 211, 0.2)',
+                    borderColor: chartColors.brightBlue,
+                    pointBackgroundColor: chartColors.brightBlue,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: chartColors.brightBlue
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: chartColors.mediumGray
+                        },
+                        grid: {
+                            color: chartColors.mediumGray
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 12
+                            }
+                        },
+                        ticks: {
+                           backdropColor: 'rgba(0,0,0,0)'
+                        },
+                         min: 0,
+                         max: 10
+                    }
+                },
+                plugins: {
+                   tooltip: tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        });
+        
+        const ctxPractices = document.getElementById('practicesChart');
+        const practiceLabels = ['Multi-Factor Authentication', 'Using a Password Manager', 'Regular Data Backups', 'Installing Software Updates Promptly', 'Recognizing Phishing Attempts'];
+        new Chart(ctxPractices, {
+            type: 'bar',
+            data: {
+                labels: processLabels(practiceLabels),
+                datasets: [{
+                    label: 'Importance Score',
+                    data: [95, 90, 85, 80, 75],
+                    backgroundColor: chartColors.darkBlue,
+                    borderColor: chartColors.brightBlue,
+                    borderWidth: 1,
+                    barThickness: 20
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        ticks: {
+                             font: {
+                                size: 10
+                            }
+                        }
+                    }
+                },
+                 plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        });
+
+        const ctxIot = document.getElementById('iotChart');
+        new Chart(ctxIot, {
+            type: 'bubble',
+            data: {
+                datasets: [
+                {
+                    label: 'Smart Watch',
+                    data: [{x: 20, y: 30, r: 15}],
+                    backgroundColor: 'rgba(37, 164, 211, 0.7)'
+                }, {
+                    label: 'Smart Thermostat',
+                    data: [{x: 40, y: 15, r: 20}],
+                    backgroundColor: 'rgba(11, 45, 72, 0.7)'
+                }, {
+                    label: 'Security Camera',
+                    data: [{x: 30, y: 40, r: 25}],
+                    backgroundColor: 'rgba(91, 192, 222, 0.7)'
+                }, {
+                    label: 'Smart TV',
+                    data: [{x: 10, y: 25, r: 18}],
+                    backgroundColor: 'rgba(111, 213, 240, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: tooltipTitleCallback.plugins.tooltip
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
