@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Intelligence Merit Badge Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+            padding-left: 2rem;
+            border-left: 2px solid #0072B5;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.5625rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #0094CD;
+            border: 2px solid #E0F2FE;
+        }
+        
+        .chart-container-bar {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 280px;
+            max-height: 300px;
+        }
+        
+        .chart-container-donut {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 320px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    
+    
+    
+    
+    
+    
+    
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-10 md:mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#003F88] mb-4">
+                Artificial Intelligence Merit Badge
+            </h1>
+            <p class="text-xl md:text-2xl text-[#0061A8]">
+                A Scout's Visual Guide to the 8 Requirements 🤖
+            </p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">1️⃣</span> Key Concepts
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    First, you'll need to learn the language. This requirement is all about defining the 16 core terms that form the foundation of AI and automation.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">artificial intelligence (AI)</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">AI agents</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">automation</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">basic programming</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">bots</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">data</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">databases</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">digital workers</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">general AI</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">machine learning (ML)</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">narrow AI</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">superintelligent AI</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">tasks</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">triggers</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">workflows</span>
+                    <span class="bg-[#E0F2FE] text-[#00509D] text-sm font-semibold px-4 py-2 rounded-full">variables</span>
+                </div>
+            </section>
+
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">2️⃣</span> AI Basics
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    Next, you'll find AI in the world around you. This chart shows the number of examples you need to identify for your everyday life, the workplace, and school.
+                </p>
+                <div class="chart-container-bar">
+                    <canvas id="aiBasicsChart"></canvas>
+                </div>
+                <div class="mt-8 grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                        <span class="text-5xl font-extrabold text-[#0072B5]">10</span>
+                        <p class="text-sm text-gray-600 font-semibold">"AI or Not?" Rounds</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                        <span class="text-5xl font-extrabold text-[#0072B5]">5</span>
+                        <p class="text-sm text-gray-600 font-semibold">Key Timeline Milestones</p>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">3️⃣</span> Automation Basics
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    Similar to AI, you'll identify examples of automation. This requirement also asks you to explain *how* automation works and create a historical timeline.
+                </p>
+                <div class="chart-container-bar">
+                    <canvas id="automationBasicsChart"></canvas>
+                </div>
+                <div class="mt-8 bg-gray-50 rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-[#00509D] mb-2">Key Explanation</h4>
+                    <p class="text-gray-600 text-sm">Explain how automation performs repetitive tasks, reduces human error, and optimizes resources.</p>
+                </div>
+            </section>
+
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">4️⃣</span> Ethics in AI
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    With great power comes responsibility. You'll explore the tough questions about using AI fairly and safely.
+                </p>
+                <ul class="space-y-4 mb-6">
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3 pt-1">⚖️</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-[#00509D]">Research Key Concerns</h4>
+                            <p class="text-gray-600">Investigate **Bias**, **Privacy**, and AI **Decision-Making**.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3 pt-1">🤔</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-[#00509D]">Ethical Scenarios</h4>
+                            <p class="text-gray-600">Work through **5 rounds** of the "What Would You Do?" game.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start">
+                        <span class="text-2xl mr-3 pt-1">📜</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-[#00509D]">Develop Guidelines</h4>
+                            <p class="text-gray-600">Create your own personal ethical guidelines for using AI.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3 pt-1">❓</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-[#00509D]">Explain the Turing Test</h4>
+                            <p class="text-gray-600">Define this classic test for machine intelligence.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <hr class="my-6 border-gray-200">
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 class="font-bold text-xl text-[#00509D] mb-3">✨ Ethical Dilemma Generator</h3>
+                    <p class="text-gray-700 text-sm mb-4">
+                        Click the button to generate a new, complex ethical scenario involving AI for you to debate with your counselor.
+                    </p>
+                    <button id="generateDilemmaBtn" class="w-full bg-[#0072B5] hover:bg-[#0094CD] text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out disabled:opacity-50" aria-label="Generate an ethical dilemma">
+                        ✨ Generate Ethical Dilemma
+                    </button>
+                    <div id="dilemmaOutput" class="mt-4 p-3 bg-white rounded-lg border border-gray-200 hidden">
+                        <p class="text-sm font-semibold text-[#00509D] mb-1">Scenario:</p>
+                        <p id="dilemmaText" class="text-gray-700 text-base"></p>
+                    </div>
+                    <p id="dilemmaLoading" class="hidden mt-3 text-center text-[#0072B5] text-sm">Loading scenario...</p>
+                </div>
+            </section>
+            
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">5️⃣</span> Deepfakes
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    This requirement helps you understand a specific risk of AI: deepfakes. You'll learn what they are and how to respond safely.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-[#FEFCE8] border-l-4 border-[#FACC15] p-4 rounded-r-lg">
+                        <h4 class="font-bold text-lg text-[#CA8A04]">Explain the "What"</h4>
+                        <p class="text-gray-700">Describe what a deepfake is and the potential harm it can cause to an individual's reputation or safety.</p>
+                    </div>
+                    <div class="bg-[#FEF2F2] border-l-4 border-[#EF4444] p-4 rounded-r-lg">
+                        <h4 class="font-bold text-lg text-[#DC2626]">Explain the "How"</h4>
+                        <p class="text-gray-700">Detail the steps to take if you or someone you know is impacted by a deepfake (e.g., report, don't share, seek help).</p>
+                    </div>
+                </div>
+            </section>
+            
+            
+            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 md:col-span-2"> 
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">6️⃣</span> Developing AI Skills
+                </h2>
+                <p class="text-gray-600 mb-6">
+                    It's time to learn how to "talk" to AI. This section is about effective communication to get better results.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3 pt-1">💬</span>
+                                <div>
+                                    <p class="text-gray-600">Discuss the **learning process** for AI and its **limitations** (it's not perfect!).</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3 pt-1">💡</span>
+                                <div>
+                                    <p class="font-semibold text-gray-700">Identify **5** methods to effectively communicate with AI.</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-2xl mr-3 pt-1">📚</span>
+                                <div>
+                                    <p class="font-semibold text-gray-700">Demonstrate **3** examples of writing clear instructions for a school task.</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-2xl mr-3 pt-1">⚙️</span>
+                                <div>
+                                    <p class="font-semibold text-gray-700">Explain why clear, specific instructions (**Prompt Engineering**) are crucial.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h3 class="font-bold text-xl text-[#00509D] mb-3">✨ Prompt Refinement Tool</h3>
+                        <p class="text-gray-700 text-sm mb-4">
+                            Input a vague or simple request below. Gemini will refine it into a detailed, high-quality prompt and explain the difference.
+                        </p>
+                        <textarea id="vaguePromptInput" rows="3" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-[#0072B5] focus:border-[#0072B5] mb-3 resize-none" placeholder="e.g., Write a report about space."></textarea>
+                        
+                        <button id="refinePromptBtn" class="w-full bg-[#0072B5] hover:bg-[#0094CD] text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out disabled:opacity-50" aria-label="Refine the vague prompt">
+                            ✨ Refine Prompt
+                        </button>
+                        <p id="promptLoading" class="hidden mt-3 text-center text-[#0072B5] text-sm">Refining prompt...</p>
+
+                        <div id="refinementOutput" class="mt-4 p-3 bg-white rounded-lg border border-gray-200 hidden">
+                            <p class="text-sm font-semibold text-[#00509D] mb-1">Refined Prompt:</p>
+                            <p id="refinedPromptText" class="text-gray-700 text-base mb-3"></p>
+                            <p class="text-sm font-semibold text-[#00509D] mb-1">Why it works:</p>
+                            <p id="refinementExplanation" class="text-gray-700 text-sm italic"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="md:col-span-2 bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">7️⃣</span> Practical Application (Do ONE)
+                </h2>
+                <p class="text-gray-600 mb-6 text-center max-w-3xl mx-auto">
+                    Now it's time to get hands-on! Choose one of these two practical options to apply what you've learned. Both require your counselor's approval first.
+                </p>
+                <div class="chart-container-donut">
+                    <canvas id="applicationChoiceChart"></canvas>
+                </div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="font-bold text-xl text-[#00509D] mb-2">Option A: AI Project</h3>
+                        <p class="text-gray-600 text-sm">
+                            Choose a project based on personal interest or a community need. You'll create a plan (objectives, data, ethics), implement it using AI tools, and share your experience.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="font-bold text-xl text-[#00509D] mb-2">Option B: Teach a Lesson</h3>
+                        <p class="text-gray-600 text-sm">
+                            Design a short lesson plan on AI and teach it to your patrol. Include an AI-generated explanation, examples, and an interactive demo. Share your teaching experience.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="md:col-span-2 bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003F88] mb-6 flex items-center">
+                    <span class="text-4xl mr-3">8️⃣</span> Career Exploration (Do ONE)
+                </h2>
+                <p class="text-gray-600 mb-6 text-center max-w-3xl mx-auto">
+                    Finally, look to the future. Explore career paths that use AI and automation skills by choosing one of these two options.
+                </p>
+                <div class="chart-container-donut">
+                    <canvas id="careerChoiceChart"></canvas>
+                </div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="font-bold text-xl text-[#00509D] mb-2">Option A: Career Research</h3>
+                        <p class="text-gray-600 text-sm">
+                            Identify 3 AI careers. Pick one and do a deep dive: research the training, education, costs, salary, and job outlook. Discuss your findings.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="font-bold text-xl text-[#00509D] mb-2">Option B: Interview a Professional</h3>
+                        <p class="text-gray-600 text-sm">
+                            Interview an AI or automation professional. Ask about their work, challenges, and vision for the future, as well as the training and education required.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-500">
+                This infographic is a visual guide based on the BSA Artificial Intelligence Merit Badge requirements.
+            </p>
+            <p class="text-gray-400 text-sm">
+                Always work with your merit badge counselor to ensure you complete all requirements.
+            </p>
+            
+        </footer>
+    </div>
+
+    <script>
+        
+        const API_KEY = ""; 
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
+
+        async function fetchWithRetry(url, options, retries = 3) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        if (response.status === 429 && i < retries - 1) { 
+                            const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            continue;
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                } catch (error) {
+                    if (i === retries - 1) {
+                        console.error("Fetch failed after multiple retries:", error);
+                        throw error;
+                    }
+                }
+            }
+        }
+
+        
+        async function generateDilemma() {
+            const button = document.getElementById('generateDilemmaBtn');
+            const loading = document.getElementById('dilemmaLoading');
+            const outputDiv = document.getElementById('dilemmaOutput');
+            const outputText = document.getElementById('dilemmaText');
+
+            button.disabled = true;
+            outputDiv.classList.add('hidden');
+            loading.classList.remove('hidden');
+            
+            const systemPrompt = "You are an ethics professor creating complex, thought-provoking ethical dilemmas involving Artificial Intelligence or modern automation for a high-school level student. The scenario must be concise (max 100 words) and must end with a clear question: 'What choice would you make and why?'";
+            const userQuery = "Generate one new ethical dilemma involving AI in a real-world setting (like school, work, or public safety).";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const result = await fetchWithRetry(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Failed to generate scenario.";
+                outputText.textContent = text.trim();
+                outputDiv.classList.remove('hidden');
+
+            } catch (error) {
+                outputText.textContent = "Error loading dilemma. Please try again.";
+                outputDiv.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
+                button.disabled = false;
+            }
+        }
+
+        
+        async function refinePrompt() {
+            const input = document.getElementById('vaguePromptInput');
+            const button = document.getElementById('refinePromptBtn');
+            const loading = document.getElementById('promptLoading');
+            const outputDiv = document.getElementById('refinementOutput');
+            const refinedText = document.getElementById('refinedPromptText');
+            const explanationText = document.getElementById('refinementExplanation');
+
+            const vaguePrompt = input.value.trim();
+            if (!vaguePrompt) return;
+
+            button.disabled = true;
+            outputDiv.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            const systemPrompt = "You are a world-class prompt engineer and tutor. Your task is to take a vague user prompt and transform it into a highly detailed, effective prompt. The response MUST be a JSON object with two fields: 'refined_prompt' (the new, detailed prompt) and 'explanation' (a concise explanation of why the original prompt was weak and how the refined prompt addresses that weakness).";
+            const userQuery = `Original vague prompt: "${vaguePrompt}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "refined_prompt": { "type": "STRING" },
+                            "explanation": { "type": "STRING" }
+                        },
+                        propertyOrdering: ["refined_prompt", "explanation"]
+                    }
+                }
+            };
+
+            try {
+                const result = await fetchWithRetry(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const jsonString = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                const parsedJson = JSON.parse(jsonString);
+
+                refinedText.textContent = parsedJson.refined_prompt || "Refinement failed.";
+                explanationText.textContent = parsedJson.explanation || "No explanation provided.";
+                outputDiv.classList.remove('hidden');
+
+            } catch (error) {
+                refinedText.textContent = "Error loading refinement. Please try again.";
+                explanationText.textContent = "Check your input and network connection.";
+                outputDiv.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
+                button.disabled = false;
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+
+            
+            document.getElementById('generateDilemmaBtn').addEventListener('click', generateDilemma);
+            document.getElementById('refinePromptBtn').addEventListener('click', refinePrompt);
+
+            
+            const brilliantBlues = {
+                darkest: '#003F88',
+                dark: '#00509D',
+                medium: '#0072B5',
+                light: '#0094CD',
+                lightest: '#00B6E2',
+                accent: '#E0F2FE'
+            };
+
+            
+            function wrapLabel(label, maxWidth) {
+                if (typeof label !== 'string' || label.length <= maxWidth) {
+                    return label;
+                }
+                
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            }
+
+            
+            const tooltipTitleCallback = {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                      return label.join(' ');
+                    } else {
+                      return label;
+                    }
+                }
+            };
+            
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12,
+                                family: 'Inter, sans-serif'
+                            },
+                            color: '#374151'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: tooltipTitleCallback,
+                        backgroundColor: '#003F88',
+                        titleFont: {
+                            size: 14,
+                            family: 'Inter, sans-serif',
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 12,
+                            family: 'Inter, sans-serif'
+                        },
+                        padding: 10,
+                        cornerRadius: 4
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#4B5563',
+                            font: {
+                                family: 'Inter, sans-serif',
+                                weight: '600'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#4B5563',
+                            font: {
+                                family: 'Inter, sans-serif'
+                            }
+                        },
+                        grid: {
+                            color: '#E5E7EB'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            
+            const aiBasicsCtx = document.getElementById('aiBasicsChart').getContext('2d');
+            if (aiBasicsCtx) {
+                new Chart(aiBasicsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Everyday', 'Workplace', 'School'],
+                        datasets: [{
+                            label: '# of Examples to Find',
+                            data: [10, 5, 5],
+                            backgroundColor: [
+                                brilliantBlues.medium,
+                                brilliantBlues.light,
+                                brilliantBlues.lightest
+                            ],
+                            borderColor: [
+                                brilliantBlues.dark,
+                                brilliantBlues.medium,
+                                brilliantBlues.light
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: defaultChartOptions
+                });
+            }
+
+            
+            const automationBasicsCtx = document.getElementById('automationBasicsChart').getContext('2d');
+            if (automationBasicsCtx) {
+                new Chart(automationBasicsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Everyday', 'Workplace', 'School'],
+                        datasets: [{
+                            label: '# of Examples to Find',
+                            data: [10, 5, 5],
+                            backgroundColor: [
+                                brilliantBlues.medium,
+                                brilliantBlues.light,
+                                brilliantBlues.lightest
+                            ],
+                            borderColor: [
+                                brilliantBlues.dark,
+                                brilliantBlues.medium,
+                                brilliantBlues.light
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: defaultChartOptions
+                });
+            }
+
+            
+            const applicationChoiceCtx = document.getElementById('applicationChoiceChart').getContext('2d');
+            if (applicationChoiceCtx) {
+                new Chart(applicationChoiceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            wrapLabel('Option A: AI Project', 16), 
+                            wrapLabel('Option B: Teach a Lesson', 16)
+                        ],
+                        datasets: [{
+                            label: 'Choose ONE',
+                            data: [1, 1],
+                            backgroundColor: [
+                                brilliantBlues.dark,
+                                brilliantBlues.light
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: defaultChartOptions.plugins.legend,
+                            tooltip: defaultChartOptions.plugins.tooltip
+                        }
+                    }
+                });
+            }
+
+            
+            const careerChoiceCtx = document.getElementById('careerChoiceChart').getContext('2d');
+            if (careerChoiceCtx) {
+                new Chart(careerChoiceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            wrapLabel('Option A: Career Research', 16), 
+                            wrapLabel('Option B: Interview a Professional', 16)
+                        ],
+                        datasets: [{
+                            label: 'Choose ONE',
+                            data: [1, 1],
+                            backgroundColor: [
+                                brilliantBlues.dark,
+                                brilliantBlues.light
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: defaultChartOptions.plugins.legend,
+                            tooltip: defaultChartOptions.plugins.tooltip
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
